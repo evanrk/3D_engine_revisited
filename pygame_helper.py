@@ -68,7 +68,6 @@ def draw_line_3d(surface, color, vector:Vector3, camera_normal:Vector3):
 
     # draw_line_2d(surface, color, Vector2((x, y), (pos_start_x, pos_start_y)))
 
-
     rotate_x_angle = math.degrees(math.atan(camera_normal.y/math.sqrt(camera_normal.z**2 + camera_normal.x**2))) if camera_normal.z + camera_normal.x != 0 else 90
     rotate_y_angle = math.degrees(math.atan(camera_normal.x/math.sqrt(camera_normal.z**2 + camera_normal.y**2))) if camera_normal.z + camera_normal.y != 0 else 90
 
@@ -76,8 +75,10 @@ def draw_line_3d(surface, color, vector:Vector3, camera_normal:Vector3):
     x = rotated_vec.x
     y = rotated_vec.y
 
-    # TODO: change
-    start_pos_x = 0
-    start_pos_y = 0
+    # rotate the start position vector
+    rotated_start_pos = rotate_vector(Vector3(vector.start_pos), theta_x=rotate_x_angle, theta_y=rotate_y_angle)
+    print(vector.start_pos)
+    start_pos_x = rotated_start_pos.x
+    start_pos_y = rotated_start_pos.y
 
     draw_line_2d(surface, color, Vector2((x, y), (start_pos_x, start_pos_y)))

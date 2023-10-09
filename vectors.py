@@ -30,7 +30,7 @@ class Vector2:
     def __mul__(self, other):
         """Multiplies vectors (either dot product or scalar multiplication). Does not include starting position"""
         if type(other) == Vector2:
-            return Vector2(self.values.dot(other))
+            return Vector2(self.values.dot(other), start_pos=self.start_pos)
         elif type(other) == int:
             return Vector2(self.values * other)
         else:
@@ -87,7 +87,7 @@ class Vector3:
         if isinstance(other, Vector3):
             return Vector3(np.dot(self.values(other)))
         elif isinstance(other, (int, float)):
-            return Vector3(self.values * other)
+            return Vector3(self.values * other, start_pos=self.start_pos)
         else:
             raise TypeError(f"Cannot multiply Vector3 and {type(other)}")
     

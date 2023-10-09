@@ -14,9 +14,12 @@ window_size = (WINDOW_WIDTH, WINDOW_HEIGHT)
 window = pygame.display.set_mode(window_size)
 pygame.display.set_caption("3D Engine Pt 2!!")
 
-# for some reason makes the z axis?????
-# test_vec1 = Vector3((1, 1, 1)) * 200
-# test_vec2 = Vector3((-1, -1, -1)) * 200
+square_vec1 = Vector3((0, 0, 1)) * 50
+square_vec2 = Vector3((0, 1, 0)) * 50
+square_vec3 = Vector3((0, 1, 0), start_pos=(0, 0, 50)) * 50
+square_vec4 = Vector3((0, 0, 1), start_pos=(0, 50, 0)) * 50
+
+print(f"start pos: {square_vec4.start_pos}")
 
 # test_vec3 = Vector3((1, 0, 0)) * 200
 # test_vec4 = Vector3((-1, 0, 0)) * 200
@@ -35,8 +38,10 @@ while run:
 
     # draw_line_2d(window, (255, 255, 255), test_vec1)
 
-    draw_line_3d(window, (255, 255, 255), Vector3((0, 0, 1))*50, camera_normal)
-    draw_line_3d(window, (255, 255, 255), Vector3((0, 1, 0))*50, camera_normal)
+    draw_line_3d(window, (255, 255, 255), square_vec1, camera_normal)
+    draw_line_3d(window, (255, 255, 255), square_vec2, camera_normal)
+    draw_line_3d(window, (255, 255, 255), square_vec3, camera_normal)
+    draw_line_3d(window, (255, 255, 255), square_vec4, camera_normal)
     # camera_normal = camera_normal + Vector3((1, 1, 0)) / 300
     # draw_line_3d(window, (255, 255, 255), test_vec2)
     # draw_line_3d(window, (255, 255, 255), test_vec3)
@@ -51,9 +56,6 @@ while run:
 
     # cap framerate
     pygame.time.Clock().tick(60)
-
-    # #TODO: REMOVE REMOVE REMOVE
-    # break
 
 
 # cleanup
