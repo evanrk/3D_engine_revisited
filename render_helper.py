@@ -13,6 +13,10 @@ def is_on():
     return True
 
 
+def translate_vector(vector:Vector3, translate_vector:Vector3):
+    return Vector3(vector.values, (vector.start_pos[0] + translate_vector.x, vector.start_pos[1] + translate_vector.y, vector.start_pos[2] + translate_vector.z))
+
+
 def rotate_vector(vector:Vector3, theta_x=0, theta_y=0, theta_z=0):
     """Rotates a vector around the x-axis, y-axis, and z-axis. Angles in degrees"""
     # convert to radians
@@ -45,7 +49,7 @@ def rotate_vector(vector:Vector3, theta_x=0, theta_y=0, theta_z=0):
         [0, 0, 1],
     ])
     
-    return Vector3(rotation_x_matrix @ rotation_y_matrix @ rotation_z_matrix @ vector.values)
+    return Vector3(rotation_x_matrix @ rotation_y_matrix @ rotation_z_matrix @ vector.values, vector.start_pos)
 
 
 def draw_line_2d(surface, color, vector:Vector2):
@@ -73,27 +77,20 @@ def draw_line_3d(surface, color, vector:Vector3, camera_normal:Vector3):
     rotate_x_angle = math.degrees(math.atan(camera_normal.y/math.sqrt(camera_normal.z**2 + camera_normal.x**2))) if camera_normal.z + camera_normal.x != 0 else 90
     rotate_y_angle = math.degrees(math.atan(camera_normal.x/math.sqrt(camera_normal.z**2 + camera_normal.y**2))) if camera_normal.z + camera_normal.y != 0 else 90
 
+    
     rotated_vec = rotate_vector(vector, theta_x=rotate_x_angle, theta_y=rotate_y_angle)
-    x = rotated_vec.x
-    y = rotated_vec.y
-    z = rotated_vec.z
-
+    
     # rotate the start position vector
-    rotated_start_pos = rotate_vector(Vector3(vector.start_pos), theta_x=rotate_x_angle, theta_y=rotate_y_angle)
-    start_pos_x = rotated_start_pos.x
-    start_pos_y = rotated_start_pos.y
-    start_pos_z = rotated_start_pos.z
+    rotated_start_pos = rotate_vector(Vector3(vector.start_pos)-Vector3(camera_normal.start_pos), theta_x=rotate_x_angle, theta_y=rotate_y_angle)
 
     one_point_perspective(surface, color, rotated_vec, rotated_start_pos.values)
     # draw_line_2d(surface, color, Vector2((x, y), (start_pos_x, start_pos_y)))
 
 
 def one_point_perspective(surface, color, vector:Vector3, vector_start_pos:tuple):
-    """Project onto a one point perspective"""
+    """Project onto a one point perspective. Condenses points based on z value"""
     vector = Vector3(vector.values, vector_start_pos)
     
-    # condenses points based on z value
-
     start_pos_x = vector.start_pos[0]
     start_pos_y = vector.start_pos[1]
     start_pos_z = vector.start_pos[2]
@@ -101,25 +98,15 @@ def one_point_perspective(surface, color, vector:Vector3, vector_start_pos:tuple
     end_pos_x = vector.end_pos[0]
     end_pos_y = vector.end_pos[1]
     end_pos_z = vector.end_pos[2]
-
-    # # eq 1:
-    # TEST = 4
-    # # project start position into perspective
-    # proj_start_pos_x = start_pos_x - start_pos_x * start_pos_z / TEST
-    # proj_start_pos_y = start_pos_y - start_pos_y * start_pos_z / TEST
-
-    # # project end position into perspective
-    # proj_end_pos_x = end_pos_x - end_pos_x * end_pos_z / TEST
-    # proj_end_pos_y = end_pos_y - end_pos_y * end_pos_z / TEST
     
     # eq 2:
     # project start position into perspective
-    proj_start_pos_x = start_pos_x / (start_pos_z+1)
-    proj_start_pos_y = start_pos_y / (start_pos_z+1)
+    proj_start_pos_x = start_pos_x / (start_pos_z+5)
+    proj_start_pos_y = start_pos_y / (start_pos_z+5)
 
     # project end position into perspective
-    proj_end_pos_x = end_pos_x / (end_pos_z+1)
-    proj_end_pos_y = end_pos_y / (end_pos_z+1)
+    proj_end_pos_x = end_pos_x / (end_pos_z+5)
+    proj_end_pos_y = end_pos_y / (end_pos_z+5)
 
 
     # create new vector2d
