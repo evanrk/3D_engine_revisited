@@ -83,13 +83,24 @@ def draw_line_3d(surface, color, vector:Vector3, camera_normal:Vector3):
     # rotate the start position vector
     rotated_start_pos = rotate_vector(Vector3(vector.start_pos)-Vector3(camera_normal.start_pos), theta_x=rotate_x_angle, theta_y=rotate_y_angle)
 
-    one_point_perspective(surface, color, rotated_vec, rotated_start_pos.values)
+    # off_screen_check(surface, color, Vector3(rotated_vec.values, rotated_start_pos.values), camera_normal)
+    one_point_perspective(surface, color, Vector3(rotated_vec.values, rotated_start_pos.values))
     # draw_line_2d(surface, color, Vector2((x, y), (start_pos_x, start_pos_y)))
 
+#TODO: FINISH OFF SCREEN CHECK
+# def off_screen_check(surface, color, vector:Vector3, camera_normal:Vector3):
+#     if camera_normal.x > 0:
+        
+#     if camera_normal.y > 0:
+    
+#     if camera_normal.z > 0:
+    
+    # one_point_perspective(surface, color, rotated_vec, rotated_start_pos.values, camera_normal)
 
-def one_point_perspective(surface, color, vector:Vector3, vector_start_pos:tuple):
+
+def one_point_perspective(surface, color, vector:Vector3):
     """Project onto a one point perspective. Condenses points based on z value"""
-    vector = Vector3(vector.values, vector_start_pos)
+    # vector = Vector3(vector.values, vector_start_pos)
     
     start_pos_x = vector.start_pos[0]
     start_pos_y = vector.start_pos[1]
@@ -98,15 +109,15 @@ def one_point_perspective(surface, color, vector:Vector3, vector_start_pos:tuple
     end_pos_x = vector.end_pos[0]
     end_pos_y = vector.end_pos[1]
     end_pos_z = vector.end_pos[2]
-    
+
     # eq 2:
     # project start position into perspective
-    proj_start_pos_x = start_pos_x / (start_pos_z+5)
-    proj_start_pos_y = start_pos_y / (start_pos_z+5)
+    proj_start_pos_x = start_pos_x / (start_pos_z+1)
+    proj_start_pos_y = start_pos_y / (start_pos_z+1) 
 
     # project end position into perspective
-    proj_end_pos_x = end_pos_x / (end_pos_z+5)
-    proj_end_pos_y = end_pos_y / (end_pos_z+5)
+    proj_end_pos_x = end_pos_x / (end_pos_z+1)
+    proj_end_pos_y = end_pos_y / (end_pos_z+1)
 
 
     # create new vector2d

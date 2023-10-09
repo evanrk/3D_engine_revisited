@@ -105,3 +105,7 @@ class Vector3:
         """returns the projected vector of other on self if self and other are touching. Does not include the starting position so you have to add it back in"""
         scalar = np.dot(self.values, other.values) / np.dot(self.values, self.values)
         return Vector3(scalar * self.values)
+    
+    def cross(self, other):
+        """returns the cross product between this and another vector. Includes starting position of self"""
+        return Vector3(np.cross(self.values, other.values), self.start_pos)

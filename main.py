@@ -37,12 +37,11 @@ cube_vec12 = Vector3((0, 0, 1), (0, 1, 0))
 
 # normal vec of camera
 camera_normal = Vector3((0, 1, 0), (0, 0, 0))
+camera_perpendicular = Vector3((1, 0, 0), (0, 0, 0))
 
 run = True
 while run:
     run = is_on()
-
-    perpendicular_camera = Vector3((camera_normal.y, camera_normal.x, camera_normal.z))
 
     # handle key presses
     keys = pygame.key.get_pressed()
@@ -52,12 +51,19 @@ while run:
     if keys[pygame.K_DOWN] or keys[pygame.K_s]:
         camera_normal = translate_vector(camera_normal, camera_normal/-60)
     if keys[pygame.K_LEFT] or keys[pygame.K_a]:
-        camera_normal = translate_vector(camera_normal, perpendicular_camera/-60)
+        camera_normal = translate_vector(camera_normal, camera_perpendicular/-60)
     if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-        camera_normal = translate_vector(camera_normal, perpendicular_camera/60)
+        camera_normal = translate_vector(camera_normal, camera_perpendicular/60)
+    if keys[pygame.K_q] or keys[pygame.K_d]:
+        camera_normal = translate_vector(camera_normal, camera_normal.cross(camera_perpendicular)/60)
+    if keys[pygame.K_e] or keys[pygame.K_d]:
+        camera_normal = translate_vector(camera_normal, camera_normal.cross(camera_perpendicular)/-60)
+    
 
     # color background black
     window.fill((0, 0, 0))
+
+    draw_line_2d(window, (255, 0, 255), Vector2((500, 0), (-250, 0)))
 
     # draw a cube
     draw_line_3d(window, (255, 255, 255), cube_vec1, camera_normal)
