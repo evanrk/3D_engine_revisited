@@ -14,7 +14,7 @@ def is_on():
 
 
 def rotate_vector(vector:Vector3, theta_x=0, theta_y=0, theta_z=0):
-    """angles in degrees"""
+    """Rotates a vector around the x-axis, y-axis, and z-axis. Angles in degrees"""
     # convert to radians
     theta_x = math.radians(theta_x)
     theta_y = math.radians(theta_y)
@@ -49,13 +49,15 @@ def rotate_vector(vector:Vector3, theta_x=0, theta_y=0, theta_z=0):
 
 
 def draw_line_2d(surface, color, vector:Vector2):
-    translated_start = (vector.start_pos[0] + WINDOW_WIDTH/2, vector.start_pos[1] + WINDOW_HEIGHT/2)
-    translated_end = (vector.end_pos[0] + WINDOW_WIDTH/2, vector.end_pos[1] + WINDOW_HEIGHT/2)
+    """Draw 2d vector with coordinates at center"""
+    translated_start = (vector.start_pos[0]*50 + WINDOW_WIDTH/2, vector.start_pos[1]*50 + WINDOW_HEIGHT/2)
+    translated_end = (vector.end_pos[0]*50 + WINDOW_WIDTH/2, vector.end_pos[1]*50 + WINDOW_HEIGHT/2)
 
     pygame.draw.line(surface, color, translated_start, translated_end)
 
 
 def draw_line_3d(surface, color, vector:Vector3, camera_normal:Vector3):
+    """Project vector3d onto 2d plane"""
     # projection = vector - camera_normal.proj(vector)
     # x = projection.x
     # y = projection.y
@@ -74,10 +76,57 @@ def draw_line_3d(surface, color, vector:Vector3, camera_normal:Vector3):
     rotated_vec = rotate_vector(vector, theta_x=rotate_x_angle, theta_y=rotate_y_angle)
     x = rotated_vec.x
     y = rotated_vec.y
+    z = rotated_vec.z
 
     # rotate the start position vector
     rotated_start_pos = rotate_vector(Vector3(vector.start_pos), theta_x=rotate_x_angle, theta_y=rotate_y_angle)
     start_pos_x = rotated_start_pos.x
     start_pos_y = rotated_start_pos.y
+    start_pos_z = rotated_start_pos.z
 
-    draw_line_2d(surface, color, Vector2((x, y), (start_pos_x, start_pos_y)))
+    one_point_perspective(surface, color, rotated_vec, rotated_start_pos.values)
+    # draw_line_2d(surface, color, Vector2((x, y), (start_pos_x, start_pos_y)))
+
+
+def one_point_perspective(surface, color, vector:Vector3, vector_start_pos:tuple):
+    """Project onto a one point perspective"""
+    vector = Vector3(vector.values, vector_start_pos)
+    
+    # condenses points based on z value
+
+    start_pos_x = vector.start_pos[0]
+    start_pos_y = vector.start_pos[1]
+    start_pos_z = vector.start_pos[2]
+    
+    end_pos_x = vector.end_pos[0]
+    end_pos_y = vector.end_pos[1]
+    end_pos_z = vector.end_pos[2]
+
+    # # eq 1:
+    # TEST = 4
+    # # project start position into perspective
+    # proj_start_pos_x = start_pos_x - start_pos_x * start_pos_z / TEST
+    # proj_start_pos_y = start_pos_y - start_pos_y * start_pos_z / TEST
+
+    # # project end position into perspective
+    # proj_end_pos_x = end_pos_x - end_pos_x * end_pos_z / TEST
+    # proj_end_pos_y = end_pos_y - end_pos_y * end_pos_z / TEST
+    
+    # eq 2:
+    # project start position into perspective
+    proj_start_pos_x = start_pos_x / (start_pos_z+1)
+    proj_start_pos_y = start_pos_y / (start_pos_z+1)
+
+    # project end position into perspective
+    proj_end_pos_x = end_pos_x / (end_pos_z+1)
+    proj_end_pos_y = end_pos_y / (end_pos_z+1)
+
+
+    # create new vector2d
+    vector_values = (proj_end_pos_x - proj_start_pos_x, proj_end_pos_y - proj_start_pos_y)
+    start_values = (proj_start_pos_x, proj_start_pos_y)
+    
+    perspective_vector = Vector2(vector_values, start_pos=start_values)
+    
+    # draw new 2d vector
+    draw_line_2d(surface, color, perspective_vector)
