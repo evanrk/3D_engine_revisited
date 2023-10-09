@@ -77,7 +77,6 @@ def draw_line_3d(surface, color, vector:Vector3, camera_normal:Vector3):
 
     # rotate the start position vector
     rotated_start_pos = rotate_vector(Vector3(vector.start_pos), theta_x=rotate_x_angle, theta_y=rotate_y_angle)
-    print(vector.start_pos)
     start_pos_x = rotated_start_pos.x
     start_pos_y = rotated_start_pos.y
 

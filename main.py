@@ -14,18 +14,22 @@ window_size = (WINDOW_WIDTH, WINDOW_HEIGHT)
 window = pygame.display.set_mode(window_size)
 pygame.display.set_caption("3D Engine Pt 2!!")
 
-square_vec1 = Vector3((0, 0, 1)) * 50
-square_vec2 = Vector3((0, 1, 0)) * 50
-square_vec3 = Vector3((0, 1, 0), start_pos=(0, 0, 50)) * 50
-square_vec4 = Vector3((0, 0, 1), start_pos=(0, 50, 0)) * 50
+# test_vec1 = Vector3((1, 0, 0), start_pos=(0, 0, 0)) * 50
 
-print(f"start pos: {square_vec4.start_pos}")
+cube_vec1 = Vector3((1, 0, 0), (0, 50, 50)) * 50
+cube_vec2 = Vector3((1, 0, 0), (0, 0, 50)) * 50
+cube_vec3 = Vector3((1, 0, 0), (0, 0, 0)) * 50
+cube_vec4 = Vector3((1, 0, 0), (0, 50, 0)) * 50
 
-# test_vec3 = Vector3((1, 0, 0)) * 200
-# test_vec4 = Vector3((-1, 0, 0)) * 200
+cube_vec5 = Vector3((0, 1, 0), (0, 0, 0)) * 50
+cube_vec6 = Vector3((0, 1, 0), (0, 0, 50)) * 50
+cube_vec7 = Vector3((0, 1, 0), (50, 0, 50)) * 50
+cube_vec8 = Vector3((0, 1, 0), (50, 0, 0)) * 50
 
-# test_vec5 = Vector3((0, 1, 0)) * 200
-# test_vec6 = Vector3((0, -1, 0)) * 200
+cube_vec9 = Vector3((0, 0, 1), (0, 0, 0)) * 50
+cube_vec10 = Vector3((0, 0, 1), (50, 0, 0)) * 50
+cube_vec11 = Vector3((0, 0, 1), (50, 50, 0)) * 50
+cube_vec12 = Vector3((0, 0, 1), (0, 50, 0)) * 50
 
 camera_normal = Vector3((1, 0, 0))
 
@@ -36,19 +40,19 @@ while run:
     # color background black
     window.fill((0, 0, 0))
 
-    # draw_line_2d(window, (255, 255, 255), test_vec1)
-
-    draw_line_3d(window, (255, 255, 255), square_vec1, camera_normal)
-    draw_line_3d(window, (255, 255, 255), square_vec2, camera_normal)
-    draw_line_3d(window, (255, 255, 255), square_vec3, camera_normal)
-    draw_line_3d(window, (255, 255, 255), square_vec4, camera_normal)
-    # camera_normal = camera_normal + Vector3((1, 1, 0)) / 300
-    # draw_line_3d(window, (255, 255, 255), test_vec2)
-    # draw_line_3d(window, (255, 255, 255), test_vec3)
-    # draw_line_3d(window, (255, 255, 255), test_vec4)
-    # draw_line_3d(window, (255, 255, 255), test_vec5)
-    # draw_line_3d(window, (255, 255, 255), test_vec6)
-
+    draw_line_3d(window, (255, 255, 255), cube_vec1, camera_normal)
+    draw_line_3d(window, (255, 255, 255), cube_vec2, camera_normal)
+    draw_line_3d(window, (255, 255, 255), cube_vec3, camera_normal)
+    draw_line_3d(window, (255, 255, 255), cube_vec4, camera_normal)
+    draw_line_3d(window, (255, 255, 255), cube_vec5, camera_normal)
+    draw_line_3d(window, (255, 255, 255), cube_vec6, camera_normal)
+    draw_line_3d(window, (255, 255, 255), cube_vec7, camera_normal)
+    draw_line_3d(window, (255, 255, 255), cube_vec8, camera_normal)
+    draw_line_3d(window, (255, 255, 255), cube_vec9, camera_normal)
+    draw_line_3d(window, (255, 255, 255), cube_vec10, camera_normal)
+    draw_line_3d(window, (255, 255, 255), cube_vec11, camera_normal)
+    draw_line_3d(window, (255, 255, 255), cube_vec12, camera_normal)
+    
     camera_normal = rotate_vector(camera_normal, theta_z=1/6)
 
     # update display
