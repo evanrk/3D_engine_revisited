@@ -31,10 +31,13 @@ class Vector2:
         """Multiplies vectors (either dot product or scalar multiplication). Does not include starting position"""
         if type(other) == Vector2:
             return Vector2(self.values.dot(other), start_pos=self.start_pos)
-        elif type(other) == int:
+        elif isinstance(other, (int, float)):
             return Vector2(self.values * other)
         else:
-            raise TypeError(f"Cannot multiply Vector3 and {type(other)}")
+            raise TypeError(f"Cannot multiply Vector2 and {type(other)}")
+
+    def __rmul__(self, other):
+        return other * self
 
     def __truediv__(self, other):
         """Divides vectors by a scalar (does not include starting position)"""
@@ -91,6 +94,9 @@ class Vector3:
         else:
             raise TypeError(f"Cannot multiply Vector3 and {type(other)}")
     
+    def __rmul__(self, other):
+        return other * self
+
     def __truediv__(self, other):
         """Divides vectors by a scalar (does not include starting position)"""
         return Vector3(self.values / other)
@@ -101,11 +107,17 @@ class Vector3:
     def __repr__(self):
         return self.__str__()
     
+    
+    def proj_scalar(self, other):
+        """returns the scalar of the projected vector"""
+        return np.dot(self.values, other.values) / np.dot(self.values, self.values)
+
     def proj(self, other):
         """returns the projected vector of other on self if self and other are touching. Does not include the starting position so you have to add it back in"""
         scalar = np.dot(self.values, other.values) / np.dot(self.values, self.values)
         return Vector3(scalar * self.values)
     
+
     def cross(self, other):
         """returns the cross product between this and another vector. Includes starting position of self"""
         return Vector3(np.cross(self.values, other.values), self.start_pos)
