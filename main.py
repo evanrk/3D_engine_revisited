@@ -19,22 +19,22 @@ pygame.display.set_caption("3D Engine Pt 2!!")
 # cube vectors
 
 # x vectors for cube
-cube_vec3 = Vector3((1, 0, 0), (0, 0, 0))
-cube_vec4 = Vector3((1, 0, 0), (0, 1, 0))
-cube_vec2 = Vector3((1, 0, 0), (0, 0, 1))
-cube_vec1 = Vector3((1, 0, 0), (0, 1, 1))
+cube_vec3 = Vector3((1, 0, 0), (0, 0, 0), color=(255, 255, 255))
+cube_vec4 = Vector3((1, 0, 0), (0, 1, 0), color=(255, 255, 255))
+cube_vec2 = Vector3((1, 0, 0), (0, 0, 1), color=(255, 255, 255))
+cube_vec1 = Vector3((1, 0, 0), (0, 1, 1), color=(255, 255, 255))
 
 # y vectors for cube
-cube_vec5 = Vector3((0, 1, 0), (0, 0, 0))
-cube_vec6 = Vector3((0, 1, 0), (0, 0, 1))
-cube_vec8 = Vector3((0, 1, 0), (1, 0, 0))
-cube_vec7 = Vector3((0, 1, 0), (1, 0, 1))
+cube_vec5 = Vector3((0, 1, 0), (0, 0, 0), color=(255, 255, 255))
+cube_vec6 = Vector3((0, 1, 0), (0, 0, 1), color=(255, 255, 255))
+cube_vec8 = Vector3((0, 1, 0), (1, 0, 0), color=(255, 255, 255))
+cube_vec7 = Vector3((0, 1, 0), (1, 0, 1), color=(255, 255, 255))
 
 # z vectors for cube
-cube_vec9  = Vector3((0, 0, 1), (0, 0, 0))
-cube_vec10 = Vector3((0, 0, 1), (1, 0, 0))
-cube_vec12 = Vector3((0, 0, 1), (0, 1, 0))
-cube_vec11 = Vector3((0, 0, 1), (1, 1, 0))
+cube_vec9  = Vector3((0, 0, 1), (0, 0, 0), color=(255, 255, 255))
+cube_vec10 = Vector3((0, 0, 1), (1, 0, 0), color=(255, 255, 255))
+cube_vec12 = Vector3((0, 0, 1), (0, 1, 0), color=(255, 255, 255))
+cube_vec11 = Vector3((0, 0, 1), (1, 1, 0), color=(255, 255, 255))
 
 vecs = [
     cube_vec1,
@@ -52,9 +52,9 @@ vecs = [
 ]
 
 # creates 3 axis
-x_vec = Vector3((1, 0, 0), (0, 0, 1))
-y_vec = Vector3((0, 1, 0), (0, 0, 1))
-z_vec = Vector3((0, 0, 1), (0, 0, 1))
+x_vec = Vector3((1, 0, 0), (0, 0, 1), color=(255, 0, 0))
+y_vec = Vector3((0, 1, 0), (0, 0, 1), color=(0, 255, 0))
+z_vec = Vector3((0, 0, 1), (0, 0, 1), color=(0, 0, 255))
 
 vecs = [
     x_vec,
@@ -97,43 +97,43 @@ while run:
     # color background black
     window.fill((0, 0, 0))
 
-    # draw_line_2d(window, (255, 0, 255), Vector2((500, 0), (-250, 0)))
+    # draw_line_2d(window, Vector2((500, 0), (-250, 0), color=(255, 0, 255)))
 
     # draw a cube
-    # one_point_perspective(window, (255, 255, 255), cube_vec10, camera_normal, camera_perpendicular_x)
-    # one_point_perspective(window, (255, 255, 255), cube_vec1, camera_normal, camera_perpendicular_x)
-    # one_point_perspective(window, (255, 255, 255), cube_vec2, camera_normal, camera_perpendicular_x)
-    # one_point_perspective(window, (255, 255, 255), cube_vec3, camera_normal, camera_perpendicular_x)
-    # one_point_perspective(window, (255, 255, 255), cube_vec4, camera_normal, camera_perpendicular_x)
-    # one_point_perspective(window, (255, 255, 255), cube_vec5, camera_normal, camera_perpendicular_x)
-    # one_point_perspective(window, (255, 255, 255), cube_vec6, camera_normal, camera_perpendicular_x)
-    # one_point_perspective(window, (255, 255, 255), cube_vec7, camera_normal, camera_perpendicular_x)
-    # one_point_perspective(window, (255, 255, 255), cube_vec8, camera_normal, camera_perpendicular_x)
-    # one_point_perspective(window, (255, 255, 255), cube_vec9, camera_normal, camera_perpendicular_x)
-    # one_point_perspective(window, (255, 255, 255), cube_vec11, camera_normal, camera_perpendicular_x)
-    # one_point_perspective(window, (255, 255, 255), cube_vec12, camera_normal, camera_perpendicular_x)
-    # draw_line_3d(window, (255, 255, 255), cube_vec1, camera_normal, camera_perpendicular_x)
-    # draw_line_3d(window, (255, 255, 255), cube_vec2, camera_normal, camera_perpendicular_x)
-    # draw_line_3d(window, (255, 255, 255), cube_vec3, camera_normal, camera_perpendicular_x)
-    # draw_line_3d(window, (255, 255, 255), cube_vec4, camera_normal, camera_perpendicular_x)
-    # draw_line_3d(window, (255, 255, 255), cube_vec5, camera_normal, camera_perpendicular_x)
-    # draw_line_3d(window, (255, 255, 255), cube_vec6, camera_normal, camera_perpendicular_x)
-    # draw_line_3d(window, (255, 255, 255), cube_vec7, camera_normal, camera_perpendicular_x)
-    # draw_line_3d(window, (255, 255, 255), cube_vec8, camera_normal, camera_perpendicular_x)
-    # draw_line_3d(window, (255, 255, 255), cube_vec9, camera_normal, camera_perpendicular_x)
-    # draw_line_3d(window, (255, 255, 255), cube_vec10, camera_normal, camera_perpendicular_x)
-    # draw_line_3d(window, (255, 255, 255), cube_vec11, camera_normal, camera_perpendicular_x)
-    # draw_line_3d(window, (255, 255, 255), cube_vec12, camera_normal, camera_perpendicular_x)
+    # camera.one_point_perspective(window, cube_vec10)
+    # camera.one_point_perspective(window, cube_vec1)
+    # camera.one_point_perspective(window, cube_vec2)
+    # camera.one_point_perspective(window, cube_vec3)
+    # camera.one_point_perspective(window, cube_vec4)
+    # camera.one_point_perspective(window, cube_vec5)
+    # camera.one_point_perspective(window, cube_vec6)
+    # camera.one_point_perspective(window, cube_vec7)
+    # camera.one_point_perspective(window, cube_vec8)
+    # camera.one_point_perspective(window, cube_vec9)
+    # camera.one_point_perspective(window, cube_vec11)
+    # camera.one_point_perspective(window, cube_vec12)
+    # camera.draw_line_3d(window, cube_vec1)
+    # camera.draw_line_3d(window, cube_vec2)
+    # camera.draw_line_3d(window, cube_vec3)
+    # camera.draw_line_3d(window, cube_vec4)
+    # camera.draw_line_3d(window, cube_vec5)
+    # camera.draw_line_3d(window, cube_vec6)
+    # camera.draw_line_3d(window, cube_vec7)
+    # camera.draw_line_3d(window, cube_vec8)
+    # camera.draw_line_3d(window, cube_vec9)
+    # camera.draw_line_3d(window, cube_vec10)
+    # camera.draw_line_3d(window, cube_vec11)
+    # camera.draw_line_3d(window, cube_vec12)
     
-    # one_point_perspective(window, (0, 0, 255), z_vec, camera_normal, camera_perpendicular_x)
-    # one_point_perspective(window, (255, 0, 0), x_vec, camera_normal, camera_perpendicular_x)
-    # one_point_perspective(window, (0, 255, 0), y_vec, camera_normal, camera_perpendicular_x)
-    camera.draw_line_3d(window, (255, 0, 0), x_vec, camera_normal, camera_perpendicular_x)
-    camera.draw_line_3d(window, (0, 255, 0), y_vec, camera_normal, camera_perpendicular_x)
-    camera.draw_line_3d(window, (0, 0, 255), z_vec, camera_normal, camera_perpendicular_x)
+    # camera.one_point_perspective(window, (0, 0, 255), z_vec)
+    # camera.one_point_perspective(window, (255, 0, 0), x_vec)
+    # camera.one_point_perspective(window, (0, 255, 0), y_vec)
+    camera.draw_line_3d(window, x_vec)
+    camera.draw_line_3d(window, y_vec)
+    camera.draw_line_3d(window, z_vec)
 
     # rotates the camera by 1 degree around the y axis
-    # camera_normal, camera_perpendicular_x = rotate_camera(camera_normal, camera_perpendicular_x, theta_y=1)
+    # camera.rotate(camera_normal, camera_perpendicular_x, theta_y=1)
 
     x_vec = rotate_vector(x_vec, theta_y=1, theta_z=1, in_position=False)
     y_vec = rotate_vector(y_vec, theta_y=1, theta_z=1, in_position=False)

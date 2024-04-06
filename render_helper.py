@@ -50,18 +50,18 @@ def rotate_vector(vector:Vector3, theta_x=0, theta_y=0, theta_z=0, in_position=F
         [0, 0, 1],
     ])
     
-    return Vector3(rotation_z_matrix @ rotation_y_matrix @ rotation_x_matrix @ vector.values, vector.start_pos) \
+    return Vector3(rotation_z_matrix @ rotation_y_matrix @ rotation_x_matrix @ vector.values, vector.start_pos, vector.color) \
         if not in_position \
         else Vector3(rotation_z_matrix @ rotation_y_matrix @ rotation_x_matrix @ vector.values, 
-                         rotation_z_matrix @ rotation_y_matrix @ rotation_x_matrix @ vector.start_pos)
+                         rotation_z_matrix @ rotation_y_matrix @ rotation_x_matrix @ vector.start_pos, vector.color)
 
 
-def draw_line_2d(surface, color, vector:Vector2):
+def draw_line_2d(surface, vector:Vector2):
     """Draw 2d vector with coordinates at center"""
     translated_start = (vector.start_pos[0]*50 + WINDOW_WIDTH/2, -vector.start_pos[1]*50 + WINDOW_HEIGHT/2)
     translated_end = (vector.end_pos[0]*50 + WINDOW_WIDTH/2, -vector.end_pos[1]*50 + WINDOW_HEIGHT/2)
 
-    pygame.draw.line(surface, color, translated_start, translated_end)
+    pygame.draw.line(surface, vector.color, translated_start, translated_end)
 
 
 #TODO: FINISH OFF SCREEN CHECK
