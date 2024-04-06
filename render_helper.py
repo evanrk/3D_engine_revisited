@@ -19,7 +19,9 @@ def translate_vector(vector:Vector3, translate_vector:Vector3):
 
 
 def rotate_vector(vector:Vector3, theta_x=0, theta_y=0, theta_z=0, in_position=False):
-    """Rotates a vector around the x-axis, y-axis, and z-axis. Angles in degrees"""
+    """Rotates a vector around the x-axis, y-axis, and z-axis. Angles in degrees
+       in_position = True rotates the vector in its position (keeping the position constant)
+       in_position = False rotates both the vector and its position vector"""
     # convert to radians
     theta_x = math.radians(theta_x)
     theta_y = math.radians(theta_y)
@@ -50,10 +52,17 @@ def rotate_vector(vector:Vector3, theta_x=0, theta_y=0, theta_z=0, in_position=F
         [0, 0, 1],
     ])
     
-    return Vector3(rotation_z_matrix @ rotation_y_matrix @ rotation_x_matrix @ vector.values, vector.start_pos, vector.color) \
+    return Vector3(rotation_z_matrix @ rotation_y_matrix @ rotation_x_matrix @ vector.values, vector.start_pos, color=vector.color) \
         if not in_position \
         else Vector3(rotation_z_matrix @ rotation_y_matrix @ rotation_x_matrix @ vector.values, 
-                         rotation_z_matrix @ rotation_y_matrix @ rotation_x_matrix @ vector.start_pos, vector.color)
+                         rotation_z_matrix @ rotation_y_matrix @ rotation_x_matrix @ vector.start_pos, color=vector.color)
+
+
+def rotate_vecs(vecs:list[Vector3], theta_x=0, theta_y=0, theta_z=0, in_position=False):
+    return [
+        rotate_vector(vector, theta_x=theta_x, theta_y=theta_y, theta_z=theta_z, in_position=in_position)
+        for vector in vecs
+    ]
 
 
 def draw_line_2d(surface, vector:Vector2):
@@ -62,17 +71,6 @@ def draw_line_2d(surface, vector:Vector2):
     translated_end = (vector.end_pos[0]*50 + WINDOW_WIDTH/2, -vector.end_pos[1]*50 + WINDOW_HEIGHT/2)
 
     pygame.draw.line(surface, vector.color, translated_start, translated_end)
-
-
-#TODO: FINISH OFF SCREEN CHECK
-# def off_screen_check(surface, color, vector:Vector3, camera_normal:Vector3):
-#     if camera_normal.x > 0:
-        
-#     if camera_normal.y > 0:
-    
-#     if camera_normal.z > 0:
-    
-    # one_point_perspective(surface, color, rotated_vec, rotated_start_pos.values, camera_normal)
 
 
 # def one_point_perspective(surface, color, vector:Vector3):

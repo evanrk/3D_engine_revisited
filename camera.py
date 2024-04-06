@@ -45,11 +45,6 @@ class Camera:
         if abs(projection_y) > abs(edge_y):
             projection_y = math.copysign(edge_x, projection_y)
 
-        # print(f"{projection_x=}\n{projection_y=}")
-
-        # pygame.quit()
-        # sys.exit()
-
         # must project the position too
         position_vector = Vector3(vector.start_pos)
 
@@ -82,4 +77,5 @@ class Camera:
 
     
     def draw_vecs_3d(self, surface, vecs):
-        pass
+        for vec in vecs:
+            self.draw_line_3d(surface, vec)
