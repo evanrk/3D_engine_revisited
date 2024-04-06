@@ -4,6 +4,7 @@ class Vector2:
     def __init__(self, vec, start_pos=(0, 0)):
         self.values = np.array(vec)
         self.start_pos = start_pos
+        # TODO: CHANGE END POSITION TO UPDATE
         self.end_pos = (start_pos[0] + vec[0], start_pos[1] + vec[1])
 
 
