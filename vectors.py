@@ -6,7 +6,7 @@ class Vector2:
         self.start_pos = start_pos
         self.color = color
         # TODO: CHANGE END POSITION TO UPDATE
-        self.end_pos = (start_pos[0] + vec[0], start_pos[1] + vec[1])
+        # self.end_pos = (start_pos[0] + vec[0], start_pos[1] + vec[1])
 
 
     @property
@@ -20,6 +20,10 @@ class Vector2:
     @property
     def magnitude(self):
         return math.sqrt(self.x ** 2 + self.y ** 2)
+
+    @property
+    def end_pos(self):
+        return (self.start_pos[0] + self.values[0], self.start_pos[1] + self.values[1])
 
     def __add__(self, other):
         """Adds vectors. Does not include starting position"""
@@ -51,6 +55,15 @@ class Vector2:
     def __repr__(self):
         return self.__str__()
 
+    def __getitem__(self, index):
+        return self.values[index]
+
+
+    def proj_scalar(self, other):
+        """returns the scalar of the projected vector"""
+        return np.dot(self.values, other.values) / np.dot(self.values, self.values)
+
+
     def proj(self, other):
         """returns the projected vector of other on self if self and other are touching. Does not include the starting position so you have to add it back in"""
         scalar = np.dot(self.values, other.values) / np.dot(self.values, self.values)
@@ -61,8 +74,8 @@ class Vector3:
         self.values = np.array(vec)
         self.start_pos = start_pos
         self.color = color
+        # self.end_pos = (start_pos[0] + vec[0], start_pos[1] + vec[1], start_pos[2] + vec[2])
 
-        self.end_pos = (start_pos[0] + vec[0], start_pos[1] + vec[1], start_pos[2] + vec[2])
 
     @property
     def x(self):
@@ -75,6 +88,10 @@ class Vector3:
     @property
     def z(self):
         return self.values[2]
+
+    @property
+    def end_pos(self):
+        return (self.start_pos[0] + self.values[0], self.start_pos[1] + self.values[1], self.start_pos[2] + self.values[2])
 
     @property
     def magnitude(self):
@@ -110,6 +127,9 @@ class Vector3:
     def __repr__(self):
         return self.__str__()
     
+    def __getitem__(self, index):
+        return self.values[index]
+
     
     def proj_scalar(self, other):
         """returns the scalar of the projected vector"""

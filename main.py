@@ -52,15 +52,15 @@ vecs = [
 ]
 
 # creates 3 axis
-x_vec = Vector3((1, 0, 0), (0, 0, 1), color=(255, 0, 0))
-y_vec = Vector3((0, 1, 0), (0, 0, 1), color=(0, 255, 0))
-z_vec = Vector3((0, 0, 1), (0, 0, 1), color=(0, 0, 255))
+# x_vec = Vector3((1, 0, 0), (0, 0, 1), color=(255, 0, 0))
+# y_vec = Vector3((0, 1, 0), (0, 0, 1), color=(0, 255, 0))
+# z_vec = Vector3((0, 0, 1), (0, 0, 1), color=(0, 0, 255))
 
-vecs = [
-    x_vec,
-    y_vec,
-    z_vec,
-]
+# vecs = [
+#     x_vec,
+#     y_vec,
+#     z_vec,
+# ]
 
 # normal vec of camera
 
@@ -78,8 +78,20 @@ while run:
     run = is_on()
 
     # handle key presses
-    # keys = pygame.key.get_pressed()
+    keys = pygame.key.get_pressed()
     
+    if keys[pygame.K_UP] or keys[pygame.K_w]:
+        camera.translate(0, 0, 1)
+    if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+        camera.translate(0, 0, -1)
+    if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+        camera.translate(-1, 0, 0)
+    if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+        camera.translate(1, 0, 0)
+    if keys[pygame.K_q] or keys[pygame.K_d]:
+        camera.translate(0, -1, 0)
+    if keys[pygame.K_e] or keys[pygame.K_d]:
+        camera.translate(0, 1, 0)
     # if keys[pygame.K_UP] or keys[pygame.K_w]:
     #     camera_normal = translate_vector(camera_normal, camera_normal/60)
     # if keys[pygame.K_DOWN] or keys[pygame.K_s]:
@@ -93,35 +105,18 @@ while run:
     # if keys[pygame.K_e] or keys[pygame.K_d]:
     #     camera_normal = translate_vector(camera_normal, camera_normal.cross(camera_perpendicular_x)/-60)
     
-
     # color background black
     window.fill((0, 0, 0))
 
     # draw_line_2d(window, Vector2((500, 0), (-250, 0), color=(255, 0, 255)))
 
-    # draw a cube
-    # camera.one_point_perspective(window, cube_vec10)
-    # camera.one_point_perspective(window, cube_vec1)
-    # camera.one_point_perspective(window, cube_vec2)
-    # camera.one_point_perspective(window, cube_vec3)
-    # camera.one_point_perspective(window, cube_vec4)
-    # camera.one_point_perspective(window, cube_vec5)
-    # camera.one_point_perspective(window, cube_vec6)
-    # camera.one_point_perspective(window, cube_vec7)
-    # camera.one_point_perspective(window, cube_vec8)
-    # camera.one_point_perspective(window, cube_vec9)
-    # camera.one_point_perspective(window, cube_vec11)
-    # camera.one_point_perspective(window, cube_vec12)
 
-    camera.draw_vecs_3d(window, vecs)
-    vecs = rotate_vecs(vecs, theta_y=1, theta_z=1, in_position=False)
-    
-    # camera.one_point_perspective(window, (0, 0, 255), z_vec)
-    # camera.one_point_perspective(window, (255, 0, 0), x_vec)
-    # camera.one_point_perspective(window, (0, 255, 0), y_vec)
+    # camera.draw_vecs_3d(window, vecs)
+    camera.draw_vecs_1p(window, vecs)
+    vecs = rotate_vecs(vecs, theta_y=1, theta_z=1, in_position=True)
 
     # rotates the camera by 1 degree around the y axis
-    # camera.rotate(camera_normal, camera_perpendicular_x, theta_y=1)
+    # camera.rotate(theta_y=1)
 
 
     # update display
