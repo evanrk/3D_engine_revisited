@@ -1,3 +1,4 @@
 WINDOW_WIDTH = 750
 WINDOW_HEIGHT = 500
 FOV = 90 # degrees
+FPS = 60

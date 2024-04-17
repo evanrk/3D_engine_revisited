@@ -7,12 +7,6 @@ import numpy as np
 from vectors import *
 from constants import *
 
-def is_on():
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            return False
-    return True
-
 
 def translate_vector(vector:Vector3, translate_vector:Vector3):
     return Vector3(vector.values, (vector.start_pos[0] + translate_vector.x, vector.start_pos[1] + translate_vector.y, vector.start_pos[2] + translate_vector.z))
@@ -67,8 +61,8 @@ def rotate_vecs(vecs:list[Vector3], theta_x=0, theta_y=0, theta_z=0, in_position
 
 def draw_line_2d(surface, vector:Vector2):
     """Draw 2d vector with coordinates at center"""
-    translated_start = (vector.start_pos[0]*50 + WINDOW_WIDTH/2, -vector.start_pos[1]*50 + WINDOW_HEIGHT/2)
-    translated_end = (vector.end_pos[0]*50 + WINDOW_WIDTH/2, -vector.end_pos[1]*50 + WINDOW_HEIGHT/2)
+    translated_start = (vector.start_pos[0]*200 + WINDOW_WIDTH/2, -vector.start_pos[1]*200 + WINDOW_HEIGHT/2)
+    translated_end = (vector.end_pos[0]*200 + WINDOW_WIDTH/2, -vector.end_pos[1]*200 + WINDOW_HEIGHT/2)
 
     pygame.draw.line(surface, vector.color, translated_start, translated_end)
 

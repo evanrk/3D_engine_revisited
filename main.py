@@ -74,56 +74,62 @@ camera = Camera(camera_normal, camera_perpendicular_x, camera_pos)
 # camera_normal, camera_perpendicular_x = rotate_camera(camera_normal, camera_perpendicular_x, theta_z=45, theta_y=45)
 
 run = True
+paused = False
+
 while run:
-    run = is_on()
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            run = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_p:
+                paused = not paused # pause game
 
     # handle key presses
     keys = pygame.key.get_pressed()
     
+    # move forward
     if keys[pygame.K_UP] or keys[pygame.K_w]:
         camera.translate(0, 0, 1)
+    # move back
     if keys[pygame.K_DOWN] or keys[pygame.K_s]:
         camera.translate(0, 0, -1)
+    # move left
     if keys[pygame.K_LEFT] or keys[pygame.K_a]:
         camera.translate(-1, 0, 0)
+    # move right
     if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
         camera.translate(1, 0, 0)
-    if keys[pygame.K_q] or keys[pygame.K_d]:
+    # move up
+    if keys[pygame.K_q]:
         camera.translate(0, -1, 0)
-    if keys[pygame.K_e] or keys[pygame.K_d]:
-        camera.translate(0, 1, 0)
-    # if keys[pygame.K_UP] or keys[pygame.K_w]:
-    #     camera_normal = translate_vector(camera_normal, camera_normal/60)
-    # if keys[pygame.K_DOWN] or keys[pygame.K_s]:
-    #     camera_normal = translate_vector(camera_normal, camera_normal/-60)
-    # if keys[pygame.K_LEFT] or keys[pygame.K_a]:
-    #     camera_normal = translate_vector(camera_normal, camera_perpendicular_x/-60)
-    # if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-    #     camera_normal = translate_vector(camera_normal, camera_perpendicular_x/60)
-    # if keys[pygame.K_q] or keys[pygame.K_d]:
-    #     camera_normal = translate_vector(camera_normal, camera_normal.cross(camera_perpendicular_x)/60)
-    # if keys[pygame.K_e] or keys[pygame.K_d]:
-    #     camera_normal = translate_vector(camera_normal, camera_normal.cross(camera_perpendicular_x)/-60)
-    
-    # color background black
-    window.fill((0, 0, 0))
-
-    # draw_line_2d(window, Vector2((500, 0), (-250, 0), color=(255, 0, 255)))
+    # move down
+    if keys[pygame.K_e]:
+        camera.translate(0, 1, 0)  
 
 
-    # camera.draw_vecs_3d(window, vecs)
-    camera.draw_vecs_1p(window, vecs)
-    vecs = rotate_vecs(vecs, theta_y=1, theta_z=1, in_position=True)
 
-    # rotates the camera by 1 degree around the y axis
-    # camera.rotate(theta_y=1)
+  
+
+    if not paused:
+        # color background black
+        window.fill((0, 0, 0))
+
+        # draw_line_2d(window, Vector2((500, 0), (-250, 0), color=(255, 0, 255)))
 
 
-    # update display
-    pygame.display.flip()
+        # camera.draw_vecs_3d(window, vecs)
+        camera.draw_vecs_1p(window, vecs)
+        vecs = rotate_vecs(vecs, theta_y=1, theta_z=1, in_position=False)
 
-    # cap framerate
-    pygame.time.Clock().tick(60)
+        # rotates the camera by 1 degree around the y axis
+        # camera.rotate(theta_y=1)
+
+
+        # update display
+        pygame.display.flip()
+
+        # cap framerate
+        pygame.time.Clock().tick(FPS)
 
 # # cleanup
 pygame.quit()

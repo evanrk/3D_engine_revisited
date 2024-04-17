@@ -20,8 +20,10 @@ class Camera:
     
 
     def translate(self, x, y, z):
-        self.camera_normal = translate_vector(self.camera_normal, Vector3((x, y, z))/60)
-        self.camera_x = translate_vector(self.camera_x, Vector3((x, y, z))/60)
+        """moves the camera in directions with respect to the camera's x, y, z vectors, not the real basis ones"""
+        movement_vec = z * self.camera_normal + x * self.camera_x + y * self.camera_y
+        self.camera_normal = translate_vector(self.camera_normal, movement_vec /FPS)
+        self.camera_x = translate_vector(self.camera_x, movement_vec/FPS)
 
 
     def rotate(self, theta_x=0, theta_y=0, theta_z=0):
@@ -34,55 +36,91 @@ class Camera:
     def draw_line_3d(self, surface, vector:Vector3):
         # the magnitude in the direction of the camera perp vector should be the distance of that vector in the projected x direction
         projection_x = self.camera_x.proj_scalar(vector - Vector3(self.camera_normal.start_pos))
+        projection_x_start = self.camera_x.proj_scalar(Vector3(vector.start_pos) - Vector3(self.camera_normal.start_pos))
         # same for this one but in the y direction
         projection_y = self.camera_y.proj_scalar(vector - Vector3(self.camera_normal.start_pos))
+        projection_y_start = self.camera_y.proj_scalar(Vector3(vector.start_pos) - Vector3(self.camera_normal.start_pos))
         
-        projection_z = self.camera_normal.proj_scalar(vector - Vector3(self.camera_normal.start_pos))
+        # projection_z = self.camera_normal.proj_scalar(vector - Vector3(self.camera_normal.start_pos))
+        # projection_z_start = self.camera_normal.proj_scalar(Vector3(vector.start_pos) - Vector3(self.camera_normal.start_pos))
 
-        edge_x = max(math.tan(FOV/2) * projection_z, 0)
-        edge_y = max(math.tan(FOV/2) * projection_z * WINDOW_WIDTH/WINDOW_HEIGHT, 0) # scaled bc height is smaller
+        # projection_y_start = Vector3(projection_y.start_pos) - Vector3(self.camera_normal.start_pos)
+        # projection_z_start = Vector3(projection_z.start_pos) - Vector3(self.camera_normal.start_pos)
+
+        # edge_x = max(math.tan(FOV/2) * projection_z, 0)
+        # edge_y = max(math.tan(FOV/2) * projection_z * WINDOW_WIDTH/WINDOW_HEIGHT, 0) # scaled bc height is smaller
 
 
-        if abs(projection_x) > abs(edge_x):
-            projection_x = math.copysign(edge_x, projection_x)
+        # if abs(projection_x) > abs(edge_x):
+        #     projection_x = math.copysign(edge_x, projection_x)
         
-        if abs(projection_y) > abs(edge_y):
-            projection_y = math.copysign(edge_x, projection_y)
+        # if abs(projection_y) > abs(edge_y):
+        #     projection_y = math.copysign(edge_x, projection_y)
 
         # must project the position too
-        position_vector = Vector3(vector.start_pos)
+        # position_vector = Vector3(vector.start_pos)
 
-        pos_start_x = self.camera_x.proj_scalar(position_vector)
-        pos_start_y = self.camera_y.proj_scalar(position_vector)
+        # pos_start_x = self.camera_x.proj_scalar(position_vector)
+        # pos_start_y = self.camera_y.proj_scalar(position_vector)
 
-        draw_line_2d(surface, Vector2((projection_x, projection_y), (pos_start_x, pos_start_y), color=vector.color))
+        draw_line_2d(surface, Vector2((projection_x, projection_y), (projection_x_start, projection_y_start), color=vector.color))
 
 
     def one_point_perspective(self, surface, vector:Vector3):
-        vector_start = Vector3(vector.start_pos)
-        vector_end = (vector + vector_start)
+        # vector_start = Vector3(vector.start_pos)
+        # vector_end = (vector + vector_start)
         
 
-        # the distance to the start of the vector
-        distance_to_start = (vector_start - Vector3(self.camera_normal.start_pos)).magnitude
-        # the distance to the end of the vector
-        distance_to_end = (vector_end - Vector3(self.camera_normal.start_pos)).magnitude
+        # # the distance to the start of the vector
+        # distance_to_start = self.camera_normal.proj_scalar(vector_start - Vector3(self.camera_normal.start_pos))
+        # # distance_to_start = (vector_start - Vector3(self.camera_normal.start_pos))
+        # # the distance to the end of the vector
+        # distance_to_end = self.camera_normal.proj_scalar(vector_end - Vector3(self.camera_normal.start_pos))
+        # # distance_to_end = (vector_end - Vector3(self.camera_normal.start_pos)).magnitude
 
-        print(f"{distance_to_start=}\n{distance_to_end=}")
+        # print(f"{distance_to_start=}\n{distance_to_end=}\n")
 
-        # scaled start and end from the fov
-        scaler_start = (math.tan(FOV/2) * distance_to_start)
-        scaler_end = (math.tan(FOV/2) * distance_to_end)
+        # # scaled start and end from the fov
+        # scaler_start = (math.tan(FOV/2) * distance_to_start)
+        # scaler_end = (math.tan(FOV/2) * distance_to_end)
 
-        # scaled to perspective
-        perspective_start = vector_start / scaler_start
-        perspective_end = vector_end / scaler_end
+        # # scaled to perspective
+        # perspective_start = vector_start / scaler_start
+        # perspective_end = vector_end / scaler_end
 
-        # create perspective vector from the new start and end values
-        perspective_vector = Vector3((perspective_end-perspective_start).values, perspective_start.values, color=vector.color)
+        # # create perspective vector from the new start and end values
+        # perspective_vector = Vector3((perspective_end-perspective_start).values, perspective_start.values, color=vector.color)
 
 
-        self.draw_line_3d(surface, perspective_vector)
+        # self.draw_line_3d(surface, perspective_vector)
+        self.draw_line_3d(surface, vector)
+    # def one_point_perspective(self, surface, vector:Vector3):
+    #     vector_start = Vector3(vector.start_pos)
+    #     vector_end = (vector + vector_start)
+        
+
+    #     # the distance to the start of the vector
+    #     distance_to_start = self.camera_normal.proj_scalar(vector_start - Vector3(self.camera_normal.start_pos))
+    #     # distance_to_start = (vector_start - Vector3(self.camera_normal.start_pos))
+    #     # the distance to the end of the vector
+    #     distance_to_end = self.camera_normal.proj_scalar(vector_end - Vector3(self.camera_normal.start_pos))
+    #     # distance_to_end = (vector_end - Vector3(self.camera_normal.start_pos)).magnitude
+
+    #     print(f"{distance_to_start=}\n{distance_to_end=}\n")
+
+    #     # scaled start and end from the fov
+    #     scaler_start = (math.tan(FOV/2) * distance_to_start)
+    #     scaler_end = (math.tan(FOV/2) * distance_to_end)
+
+    #     # scaled to perspective
+    #     perspective_start = vector_start / scaler_start
+    #     perspective_end = vector_end / scaler_end
+
+    #     # create perspective vector from the new start and end values
+    #     perspective_vector = Vector3((perspective_end-perspective_start).values, perspective_start.values, color=vector.color)
+
+
+    #     self.draw_line_3d(surface, perspective_vector)
 
 
     def draw_vecs_3d(self, surface, vecs):
@@ -96,7 +134,7 @@ class Camera:
 
 
 
-# legacy one point perspective (scales very weirdly and i can figure it out haha)
+# legacy one point perspective (scales very weirdly and i cant figure it out haha)
  # def one_point_perspective(self, surface, vector:Vector3):
     #     """Project onto a one point perspective. Condenses points based on z value"""
     #     # z axis is out/in the screen
