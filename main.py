@@ -84,33 +84,30 @@ while run:
             if event.key == pygame.K_p:
                 paused = not paused # pause game
 
-    # handle key presses
-    keys = pygame.key.get_pressed()
-    
-    # move forward
-    if keys[pygame.K_UP] or keys[pygame.K_w]:
-        camera.translate(0, 0, 1)
-    # move back
-    if keys[pygame.K_DOWN] or keys[pygame.K_s]:
-        camera.translate(0, 0, -1)
-    # move left
-    if keys[pygame.K_LEFT] or keys[pygame.K_a]:
-        camera.translate(-1, 0, 0)
-    # move right
-    if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
-        camera.translate(1, 0, 0)
-    # move up
-    if keys[pygame.K_q]:
-        camera.translate(0, -1, 0)
-    # move down
-    if keys[pygame.K_e]:
-        camera.translate(0, 1, 0)  
-
-
-
-  
-
     if not paused:
+        # handle key presses
+        keys = pygame.key.get_pressed()
+        
+        # move forward
+        if keys[pygame.K_UP] or keys[pygame.K_w]:
+            camera.translate(0, 0, 1)
+        # move back
+        if keys[pygame.K_DOWN] or keys[pygame.K_s]:
+            camera.translate(0, 0, -1)
+        # move left
+        if keys[pygame.K_LEFT] or keys[pygame.K_a]:
+            camera.translate(-1, 0, 0)
+        # move right
+        if keys[pygame.K_RIGHT] or keys[pygame.K_d]:
+            camera.translate(1, 0, 0)
+        # move up
+        if keys[pygame.K_q]:
+            camera.translate(0, -1, 0)
+        # move down
+        if keys[pygame.K_e]:
+            camera.translate(0, 1, 0)  
+
+
         # color background black
         window.fill((0, 0, 0))
 
@@ -119,7 +116,7 @@ while run:
 
         # camera.draw_vecs_3d(window, vecs)
         camera.draw_vecs_1p(window, vecs)
-        vecs = rotate_vecs(vecs, theta_y=1, theta_z=1, in_position=False)
+        # vecs = rotate_vecs(vecs, theta_y=1, theta_z=1, in_position=False)
 
         # rotates the camera by 1 degree around the y axis
         # camera.rotate(theta_y=1)
