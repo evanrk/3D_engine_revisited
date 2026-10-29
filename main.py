@@ -1,10 +1,13 @@
-import pygame
 import sys
+from functools import reduce
+
+import pygame
 
 from vectors import *
 from render_helper import *
 from constants import *
 from camera import *
+from objects import Object3D
 
 pygame.init()
 
@@ -19,8 +22,8 @@ pygame.display.set_caption("3D Engine Pt 2!!")
 # cube vectors
 
 # x vectors for cube
-cube_vec3 = Vector3((1, 0, 0), (0, 0, 0), color=(255, 255, 255))
 cube_vec4 = Vector3((1, 0, 0), (0, 1, 0), color=(255, 255, 255))
+cube_vec3 = Vector3((1, 0, 0), (0, 0, 0), color=(255, 255, 255))
 cube_vec2 = Vector3((1, 0, 0), (0, 0, 1), color=(255, 255, 255))
 cube_vec1 = Vector3((1, 0, 0), (0, 1, 1), color=(255, 255, 255))
 
@@ -62,9 +65,13 @@ vecs = [
 #     z_vec,
 # ]
 
+
+cube = Object3D.read_obj("cube.obj")
+vecs = reduce(lambda x, y: x+y , cube.face_vectors)
+
+
+
 # normal vec of camera
-
-
 camera_normal = Vector3((0, 0, 1))
 camera_perpendicular_x = Vector3((1, 0, 0))
 camera_pos = (0, 0, -1)
@@ -105,13 +112,14 @@ while run:
             camera.translate(0, -1, 0)
         # move down
         if keys[pygame.K_e]:
-            camera.translate(0, 1, 0)  
+            camera.translate(0, 1, 0)
 
 
         # color background black
         window.fill((0, 0, 0))
 
-        # draw_line_2d(window, Vector2((500, 0), (-250, 0), color=(255, 0, 255)))
+        # the horizon line, to keep everything in perspective
+        draw_line_2d(window, Vector2((500, 0), (-250, 0), color=(255, 0, 255)))
 
 
         # camera.draw_vecs_3d(window, vecs)

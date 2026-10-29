@@ -122,7 +122,7 @@ class Vector3:
         return Vector3(self.values / other, color=self.color)
     
     def __str__(self):
-        return f"{self.values}"
+        return f"Vec: {self.values}"
         
     def __repr__(self):
         return self.__str__()
